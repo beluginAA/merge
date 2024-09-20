@@ -55,6 +55,9 @@ jobs:
       with:
         name: dev-django-image
         path: /tmp
+
+    - name: Ls
+      run: ls -l /tmp && docker images
     
     - name: Run Trivy vulnerability scanner on django
       uses: aquasecurity/trivy-action@master
