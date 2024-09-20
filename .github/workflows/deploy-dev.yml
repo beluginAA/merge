@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: Set up Docker Buildx
       run: |
-        docker buils -d Dockerfil -t dev-image:latest . 
+        docker build -d Dockerfil -t dev-image:latest . 
 
     - name: Ls
       run: ls -l /tmp && docker images
