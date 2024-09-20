@@ -24,7 +24,8 @@ jobs:
     - name: Build and export
       uses: docker/build-push-action@v6
       with:
-        context: dev-test:latest
+        context: .
+        push: false
         tags: dev-test:latest
         file: Dockerfile
         outputs: type=docker,dest=/tmp/test-image.tar
