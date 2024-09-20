@@ -30,7 +30,7 @@ jobs:
         outputs: type=docker,dest=/tmp/dev-sim.tar
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: dev-sim
         path: /tmp/dev-sim.tar
