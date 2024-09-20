@@ -36,13 +36,31 @@ jobs:
         DOCKER_BUILD_CHECKS_ANNOTATIONS: false
         DOCKER_BUILD_SUMMARY: false
         DOCKER_BUILD_RECORD_RETENTION_DAYS: 3
-        
-    - name: Ls
-      run: ls -l /tmp
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: dev-django-image
         path: /tmp/django-image.tar
+
+
+  image-scan:
+    name: Image scan
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: dev-django-image
+        path: /tmp
+    
+    - name: Run Trivy vulnerability scanner on django
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: '/tmp/django-image.tar'
+        format: 'table'
+        ignore-unfixed: true
+        exit-code: '1'
+        vuln-type: 'os,library'
+#        severity: 'CRITICAL,HIGH'
 
