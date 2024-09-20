@@ -34,6 +34,7 @@ jobs:
         outputs: type=docker,dest=/tmp/test-image.tar
       env:
         DOCKER_BUILD_CHECKS_ANNOTATIONS: false
+        DOCKER_BUILD_SUMMARY: false
         
     - name: Ls
       run: ls -l /tmp
