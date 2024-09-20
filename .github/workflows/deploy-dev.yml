@@ -59,7 +59,7 @@ jobs:
     - name: Run Trivy vulnerability scanner on django
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: '/tmp/django-image.tar'
+        input: '/tmp/django-image.tar'
         format: 'table'
         ignore-unfixed: true
         exit-code: '1'
