@@ -32,6 +32,8 @@ jobs:
         tags: dev-test:latest
         file: ./Dockerfile
         outputs: type=docker,dest=/tmp/test-image.tar
+      env:
+        DOCKER_BUILD_CHECKS_ANNOTATIONS: false
         
     - name: Ls
       run: ls -l /tmp
