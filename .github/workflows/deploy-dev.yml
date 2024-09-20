@@ -24,16 +24,15 @@ jobs:
     - name: Build and export
       uses: docker/build-push-action@v6
       with:
-        image: dev-test
-        tags: latest
+        tags: dev-test:latest
         file: Dockerfile
-        outputs: type=docker,dest=/tmp/myimage.tar
+        outputs: type=docker,dest=/tmp/test-image.tar
     - name: Ls
-      run: ls -l /tmp && docker images
+      run: ls -l /tmp
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: myimage
-        path: /tmp/myimage.tar
+        name: Dev-image
+        path: /tmp/test-image.tar
 
