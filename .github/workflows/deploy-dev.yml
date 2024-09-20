@@ -54,15 +54,15 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: dev-django-image
-        path: /
+        path: /tmp
 
-    - name: Ls
-      run: ls -l /
+    - name: Create access rights
+      run: chmod 777 /tmp/django-image.tar
     
     - name: Run Trivy vulnerability scanner on django
       uses: aquasecurity/trivy-action@master
       with:
-        input: '/django-image.tar'
+        input: '/tmp/django-image.tar'
         format: 'table'
         ignore-unfixed: true
         exit-code: '1'
