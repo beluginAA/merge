@@ -1,0 +1,36 @@
+name: Deployment [Dev]
+
+on:
+  pull_request:
+    branches: ['main']
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+
+  push:
+    branches: ['main']
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        tags: dev-sim:test
+        outputs: type=docker,dest=/tmp/dev-sim.tar
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: dev-sim
+        path: /tmp/dev-sim.tar
