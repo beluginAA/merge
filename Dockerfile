@@ -12,6 +12,7 @@ FROM python:3.12-slim AS python-run-stage
 ARG APP_HOME=/app
 WORKDIR ${APP_HOME}
 
+
 RUN apt update && apt upgrade --assume-yes \
          libexpat1 \
     && apt clean \
