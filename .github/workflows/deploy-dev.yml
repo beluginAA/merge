@@ -54,7 +54,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: dev-django-image
-        path: /tmp/django-image.tar
+        path: /tmp/
 
     - name: Load image
       run: |
@@ -64,7 +64,7 @@ jobs:
     - name: Run Trivy vulnerability scanner on django
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'dev-django:latest'
+        input: '/tmp/django-image.tar'
         format: 'table'
         ignore-unfixed: true
         exit-code: '1'
