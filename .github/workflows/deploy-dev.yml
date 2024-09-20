@@ -27,7 +27,7 @@ jobs:
         context: .
         push: false
         tags: dev-test:latest
-        file: Dockerfile
+        file: ./Dockerfile
         outputs: type=docker,dest=/tmp/test-image.tar
         
     - name: Ls
