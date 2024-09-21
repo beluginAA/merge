@@ -14,21 +14,28 @@ on:
       - '.gitignore'
 
 jobs:
-  scan-secrets:
-    name: Find secrets
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+  Scan-for-secrets:
+     runs-on: ubuntu-latest
+     steps:
+     - uses: actions/checkout@v2
 
-    - name: Secret Scanning
-      uses: trufflesecurity/trufflehog@main
-      with:
-        extra_args: --trace
+     - name: Install Whispers
+       run: sudo pip install whispers
+       
+     - name: Run scanner for the repository
+       run: whispers ${{ github.workspace }} > /tmp/scan_output.json
+
+     - name: Upload the scan output
+       uses: actions/upload-artifact@v2
+       with:
+         name: scan_results
+         path: /tmp/scan_output.json
+         retention-days: 2
 
 
   build-django:
     name: Build Image
-    needs: scan-secrets
+    needs: Scan-for-secrets
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code Repository
