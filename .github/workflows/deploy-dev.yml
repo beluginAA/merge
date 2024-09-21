@@ -23,7 +23,7 @@ jobs:
     - name: Secret Scanning
       uses: trufflesecurity/trufflehog@main
       with:
-        extra_args: --json
+        extra_args: --trace
 
 
   build-django:
