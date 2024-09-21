@@ -20,18 +20,35 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install Whispers
-      run: sudo pip install whispers
-     
-    - name: Run scanner for the repository
-      run: whispers ${{ github.workspace }} > /tmp/scan_output.json
-    
-    - name: Upload the scan output
-      uses: actions/upload-artifact@v4
+    - name: Run Gitleaks
+      id: gitleaks
+      uses: DariuszPorowski/github-action-gitleaks@v2
       with:
-       name: scan_results
-       path: /tmp/scan_output.json
-       retention-days: 2
+        fail: false
+
+    - name: Post PR comment
+      uses: actions/github-script@v6
+      if: ${{ steps.gitleaks.outputs.exitcode == 1 && github.event_name == 'pull_request' }}
+      with:
+        github-token: ${{ github.token }}
+        script: |
+          const { GITLEAKS_RESULT, GITLEAKS_OUTPUT } = process.env
+          const output = `### ${GITLEAKS_RESULT}
+
+          <details><summary>Log output</summary>
+
+          ${GITLEAKS_OUTPUT}
+
+          </details>
+          `
+          github.rest.issues.createComment({
+            ...context.repo,
+            issue_number: context.issue.number,
+            body: output
+          })
+      env:
+        GITLEAKS_RESULT: ${{ steps.gitleaks.outputs.result }}
+        GITLEAKS_OUTPUT: ${{ steps.gitleaks.outputs.output }}
 
 
   build-django:
