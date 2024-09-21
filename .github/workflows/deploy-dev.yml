@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Secret Scanning
+      uses: trufflesecurity/trufflehog@main
       with:
-        fetch-depth: 0
-        ref: ${{ github.head_ref }} main
-    - name: trufflehog-actions-scan
-      uses: edplato/trufflehog-actions-scan@master
+        extra_args: --only-verified
 
 
   build-django:
