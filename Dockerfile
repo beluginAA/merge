@@ -21,6 +21,7 @@ RUN apt update && apt upgrade --assume-yes \
     && rm -rf /var/cache/*
 
 COPY --from=python-build-stage /usr/src/app/wheels  /wheels/
+COPY ./script .
 
 RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
   && rm -rf /wheels/
