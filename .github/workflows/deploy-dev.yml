@@ -69,7 +69,7 @@ jobs:
         file: ./Dockerfile
         tags: dev-django:latest
         push: false
-        # outputs: type=docker,dest=/tmp/django-image.tar
+        outputs: type=docker,dest=/tmp/django-image.tar
       env:
         DOCKER_BUILD_CHECKS_ANNOTATIONS: false
         DOCKER_BUILD_SUMMARY: false
